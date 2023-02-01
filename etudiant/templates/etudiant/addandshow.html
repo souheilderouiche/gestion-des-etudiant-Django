@@ -1,0 +1,65 @@
+{% extends 'etudiant/base.html'%}
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Ajouter un nouveau étudinat</h4>
+        <form action="" method="POST">
+           {% csrf_token %}
+           {{form.as_p}}
+           <input type="submit" class="btn btn-primary" value="Ajouter">
+        </form>
+    </div>
+    <div class="col-sm-8">
+        <h4 class="text-center alert alert-info">Liste des Etudiants</h4>
+        {% if messages %}
+         {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                 {{message}}
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                      <span aria-hidden="true">&times;</span>
+                 </button>
+          </div>
+         {% endfor %}
+        {% endif %}
+        {% if etud %}
+        <table id="users" class="table table-custom table-lg">
+            <thead>
+            <tr>
+                
+                <th>ID</th>
+                <th>nom</th>
+                <th>prenom</th>
+                <th>email</th>
+                <th>password</th>
+                <th class="text-end">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for et in etud %}
+            <tr>
+            
+                <td>{{et.id}}</td>
+                <td>{{et.nom}}</td>
+                 <td>{{et.prenom}}</td>
+                 <td>{{et.email}}</td>
+                 <td>{{et.password}}</td>
+                
+                <td >
+                    <a href="{% url 'updatedata' et.id %}" class="btn btn-danger btn-sm"> Modifier</a>
+                       
+                    <form action="{% url 'deletedata' et.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger btn-sm" value="Supprimer" >
+                    </form>
+                    
+                </td>
+            </tr>
+            {% endfor%}
+            </tbody>
+        </table>
+        {% else %}
+        <h4 class="text-center alert alert-warning">pas d'enregistrement</h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

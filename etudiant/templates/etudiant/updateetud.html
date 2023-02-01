@@ -1,0 +1,12 @@
+{% extends 'etudiant/base.html'%}
+{% block content %}
+<div class="col-sm-8" offset-2>
+    <h4 class="text-center alert alert-info">Modifier un  étudiant n: {{id}}</h4>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class="btn btn-primary" value="Update">
+     </form>
+</div>
+
+{% endblock content %}
